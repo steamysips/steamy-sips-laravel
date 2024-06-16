@@ -12,6 +12,7 @@ return new class extends Migration
             $table->increments('store_id');
             $table->string('phone_no');
             $table->string('street');
+            $table->string('city');
             $table->point('coordinate')->nullable()->default(null);
             $table->unsignedInteger('district_id');
             $table->foreign('district_id')->references('district_id')->on('district');
