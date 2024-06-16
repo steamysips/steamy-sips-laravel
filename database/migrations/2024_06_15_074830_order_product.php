@@ -9,8 +9,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->foreignId('order_id')->constrained('order');
-            $table->foreignId('product_id')->constrained('product');
+            $table->unsignedInteger('order_id');
+            $table->foreign('order_id')->references('order_id')->on('order');
+            $table->unsignedInteger('product_id');
+            $table->foreign('product_id')->references('product_id')->on('product');
             $table->enum('cup_size', ['small', 'medium', 'large']);
             $table->enum('milk_type', ['almond', 'coconut', 'oat', 'soy']);
             $table->unsignedInteger('quantity');

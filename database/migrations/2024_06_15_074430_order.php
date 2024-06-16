@@ -13,8 +13,10 @@ return new class extends Migration
             $table->enum('status', ['pending', 'cancelled', 'completed'])->default('pending');
             $table->timestamp('created_date')->useCurrent();
             $table->timestamp('pickup_date')->nullable();
-            $table->foreignId('client_id')->nullable()->constrained('client')->onDelete('set null')->onUpdate('cascade');
-            $table->foreignId('store_id')->constrained('store');
+            $table->unsignedInteger('client_id')->nullable();
+            $table->foreign('client_id')->references('user_id')->on('client')->onDelete('set null')->onUpdate('cascade');
+            $table->unsignedInteger('store_id');
+            $table->foreign('store_id')->references('store_id')->on('store');
         });
     }
 

@@ -14,8 +14,10 @@ return new class extends Migration
             $table->unsignedInteger('rating');
             $table->timestamp('created_date')->useCurrent();
             $table->string('text', 2000);
-            $table->foreignId('client_id')->constrained('client')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('product_id')->constrained('product')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('client_id');
+            $table->foreign('client_id')->references('user_id')->on('client')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('product_id');
+            $table->foreign('product_id')->references('product_id')->on('product')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

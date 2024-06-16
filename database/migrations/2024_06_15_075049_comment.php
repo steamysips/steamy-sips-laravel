@@ -12,9 +12,12 @@ return new class extends Migration
             $table->increments('comment_id');
             $table->string('text', 2000);
             $table->timestamp('created_date')->useCurrent();
-            $table->foreignId('parent_comment_id')->nullable()->constrained('comment')->onDelete('cascade');
-            $table->foreignId('user_id')->constrained('user');
-            $table->foreignId('review_id')->constrained('review');
+            $table->unsignedInteger('parent_comment_id')->nullable();
+            $table->foreign('parent_comment_id')->references('comment_id')->on('comment')->onDelete('cascade');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('user_id')->on('user');
+            $table->unsignedInteger('review_id');
+            $table->foreign('review_id')->references('review_id')->on('review');
         });
     }
 
