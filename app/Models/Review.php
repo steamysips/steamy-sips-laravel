@@ -11,6 +11,11 @@ class Review extends Model
 
     protected $primaryKey = 'review_id';
 
+    protected $fillable = [
+        'rating', 'text', 'client_id', 'product_id',
+    ];
+
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');

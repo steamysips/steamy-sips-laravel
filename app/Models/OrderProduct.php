@@ -10,8 +10,6 @@ class OrderProduct extends Model
     use HasFactory;
 
     protected $primaryKey = ['order_id', 'product_id', 'cup_size', 'milk_type'];
-    public $incrementing = false; // To ensure Laravel doesn't try to increment these keys
-    protected $keyType = 'string'; // Or 'int' depending on your column types
 
     protected $fillable = [
         'order_id',

@@ -12,7 +12,7 @@ class Administrator extends Model
     protected $primaryKey = 'user_id';
 
     protected $fillable = [
-         'job_title', 'is_super_admin',
+        'user_id', 'job_title', 'is_super_admin',
     ];
 
     public function user()
