@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function show()
     {
         $client = Auth::user()->client;
@@ -66,4 +71,3 @@ class ClientController extends Controller
         return redirect('/')->with('status', 'Profile deleted successfully!');
     }
 }
-
