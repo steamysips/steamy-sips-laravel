@@ -1,14 +1,7 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisteredUserController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\OrderController;
-
-
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,27 +18,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Registration Routes
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
-
-// Profile Routes
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ClientController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ClientController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [ClientController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ClientController::class, 'destroy'])->name('profile.destroy');
-});
-
-// Product Routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
-// Order Routes
-Route::middleware('auth')->group(function () {
-    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('/orders/create', [OrderController::class, 'create'])->name('orders.create');
-    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
-    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-});
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
-require __DIR__.'/auth.php';
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+
+Route::match(['put', 'patch'], '/products/{product}', [ProductController::class, 'update'])->name('products.update');
+
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
