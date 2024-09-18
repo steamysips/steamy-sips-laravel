@@ -1,4 +1,6 @@
-@extends('layout')
+@extends('layouts.layout')
+
+@section('title','List Product')
 
 @section('content')
 
@@ -43,7 +45,7 @@
       {{ session()->get('success') }}
     </div><br />
   @endif
-  
+
   <table class="table">
     <thead>
         <tr class="table-warning">
@@ -62,6 +64,7 @@
             <td>{{ $product->category }}</td>
             <td>{{ $product->price }}</td>
             <td class="text-center">
+                <a href="{{ route('products.show', $product->product_id)}}" class="btn btn-primary btn-sm">Show</a>
                 <a href="{{ route('products.edit', $product->product_id) }}" class="btn btn-primary btn-sm">Edit</a>
                 <form action="{{ route('products.destroy', $product->product_id) }}" method="post" style="display: inline-block">
                     @csrf
@@ -76,7 +79,7 @@
 
   <!-- Create Button -->
   <div class="text-center create-btn">
-    <a href="{{ route('products.create') }}" class="btn btn-custom">Create New Product</a>
+    <a href="{{ route('products.create') }}" class="btn btn-custom">Create Product</a>
   </div>
 </div>
 

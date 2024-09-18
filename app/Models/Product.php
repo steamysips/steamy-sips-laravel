@@ -11,4 +11,9 @@ class Product extends Model
 
     protected $primaryKey = 'product_id';
     protected $fillable = ['name', 'calories', 'img_url', 'img_alt_text', 'category', 'price', 'description'];
+
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class, 'product_store');
+    }
 }

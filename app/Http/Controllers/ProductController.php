@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Store;
 
 class ProductController extends Controller
 {
@@ -13,7 +14,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('index', ['products' => $products]);
+        return view('index_product', ['products' => $products]);
     }
 
     /**
@@ -21,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $stores = Store::all(); // Fetch all stores
+        return view('create_product', compact('stores')); // Pass stores to the view
     }
 
     /**
@@ -37,8 +39,11 @@ class ProductController extends Controller
             'category' => 'required|max:50',
             'price' => 'required|numeric|min:0',
             'description' => 'required',
+            'stores' => 'required|array', // Stores must be an array
+            'stores.*' => 'exists:stores,store_id', // Each selected store must exist in the database
         ]);
 
+        // Create the new product
         Product::create($storeData);
 
         return redirect('/products')->with('success', 'Product has been added');
@@ -49,7 +54,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        return view('show_product', compact('product'));
     }
 
     /**
@@ -58,7 +64,7 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
-        return view('edit', compact('product'));
+        return view('edit_product', compact('product'));
     }
 
     /**
@@ -74,6 +80,8 @@ class ProductController extends Controller
             'category' => 'required|max:50',
             'price' => 'required|numeric|min:0',
             'description' => 'required',
+            'stores' => 'required|array', // Stores must be an array
+            'stores.*' => 'exists:stores,store_id', // Each selected store must exist in the database
         ]);
 
         Product::where('product_id', $id)->update($updateData);
@@ -89,6 +97,5 @@ class ProductController extends Controller
         $product->delete();
 
         return redirect('/products')->with('success', "{$product->name} has been deleted");
-
     }
 }
