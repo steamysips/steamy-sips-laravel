@@ -39,7 +39,7 @@ class StoreController extends Controller
             'phone_no' => 'required|max:255',
             'street' => 'required|max:255',
             'city' => 'required|max:255',
-            'district' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
+            'districts' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
             'coordinate' => 'nullable',
         ]);
 
@@ -54,7 +54,7 @@ class StoreController extends Controller
     public function show(string $id)
     {
         $store = Store::with('products')->findOrFail($id); // Fetch the store with related products
-        return view('show_store', ['stores' => $store]); // Pass the store variable
+        return view('show_store', ['store' => $store]); // Pass the store variable
     }
 
     /**
@@ -76,7 +76,7 @@ class StoreController extends Controller
             'phone_no' => 'required|max:255',
             'street' => 'required|max:255',
             'city' => 'required|max:255',
-            'district' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
+            'districts' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
             'coordinate' => 'nullable',
         ]);
 

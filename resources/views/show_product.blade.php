@@ -18,6 +18,7 @@
   @endif
 
   <!-- Product Details -->
+  <h3>Products</h3>
   <table class="table">
     <thead>
         <tr class="table-warning">
@@ -68,7 +69,7 @@
             <td>{{ $store->phone_no }}</td>
             <td>{{ $store->street }}</td>
             <td>{{ $store->city }}</td>
-            <td>{{ $store->district }}</td>
+            <td>{{ $store->districts }}</td>
             <td class="text-center">
                 <a href="{{ route('stores.edit', $store->store_id)}}" class="btn btn-primary btn-sm">Edit</a>
                 <form action="{{ route('stores.destroy', $store->store_id)}}" method="post" style="display: inline-block">

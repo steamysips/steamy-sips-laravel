@@ -37,7 +37,7 @@
             <td>{{ $store->phone_no }}</td>
             <td>{{ $store->street }}</td>
             <td>{{ $store->city }}</td>
-            <td>{{ $store->district }}</td>
+            <td>{{ $store->districts }}</td>
             <td class="text-center">
                 <a href="{{ route('stores.show', $store->store_id)}}" class="btn btn-primary btn-sm">Show</a>
                 <a href="{{ route('stores.edit', $store->store_id) }}" class="btn btn-primary btn-sm">Edit</a>

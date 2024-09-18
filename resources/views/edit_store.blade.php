@@ -35,8 +35,8 @@
           <input type="text" class="form-control" name="city" value="{{ $store->city }}"/>
       </div>
       <div class="form-group">
-          <label for="district">District</label>
-          <select class="form-control" name="district">
+          <label for="districts">District</label>
+          <select class="form-control" name="districts">
               @foreach($districts as $district)
               <option value="{{ $district }}" {{ $store->district == $district ? 'selected' : '' }}>{{ $district }}</option>
               @endforeach

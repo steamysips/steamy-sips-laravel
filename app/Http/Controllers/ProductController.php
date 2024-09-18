@@ -31,6 +31,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate product data
         $storeData = $request->validate([
             'name' => 'required|max:255',
             'calories' => 'required|numeric|min:0',
@@ -44,10 +45,14 @@ class ProductController extends Controller
         ]);
 
         // Create the new product
-        Product::create($storeData);
+        $product = Product::create($storeData);
+
+        // Attach the stores to the product (many-to-many relation)
+        $product->stores()->attach($request->stores);
 
         return redirect('/products')->with('success', 'Product has been added');
     }
+
 
     /**
      * Display the specified resource.
@@ -63,8 +68,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::findOrFail($id);
-        return view('edit_product', compact('product'));
+        $product = Product::findOrFail($id); // Fetch the product by ID
+        $stores = Store::all(); // Fetch all stores to be available for selection
+        return view('edit_product', compact('product', 'stores')); // Pass both product and stores to the view
     }
 
     /**
@@ -72,6 +78,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // Validate product data
         $updateData = $request->validate([
             'name' => 'required|max:255',
             'calories' => 'required|numeric|min:0',
@@ -84,7 +91,15 @@ class ProductController extends Controller
             'stores.*' => 'exists:stores,store_id', // Each selected store must exist in the database
         ]);
 
-        Product::where('product_id', $id)->update($updateData);
+        // Find the product
+        $product = Product::findOrFail($id);
+
+        // Update the product's attributes
+        $product->update($updateData);
+
+        // Sync the stores with the product (many-to-many relation)
+        $product->stores()->sync($request->stores);
+
         return redirect('/products')->with('success', 'Product details have been updated');
     }
 

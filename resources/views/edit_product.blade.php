@@ -59,6 +59,15 @@
               <label for="description">Description</label>
               <textarea class="form-control" name="description">{{ $product->description }}</textarea>
           </div>
+        <!-- Store selection (for the many-to-many relationship) -->
+          <div class="form-group">
+              <label for="stores">Stores:</label>
+              <select class="form-control" name="stores[]" multiple>
+                  @foreach($stores as $store)
+                      <option value="{{ $store->store_id }}">{{ $store->name }} - {{ $store->city }}</option>
+                  @endforeach
+              </select>
+          </div>
           <button type="submit" class="btn btn-block btn-danger">Update Product</button>
       </form>
   </div>
