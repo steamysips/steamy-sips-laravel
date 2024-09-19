@@ -14,7 +14,7 @@ class StoreController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $stores = Store::all();
+            $stores = Store::paginate(3);
             return view('index_store', ['stores' => $stores]);
         } else {
             return redirect('login')->with('error', 'You need to log in to access this page.');
@@ -90,8 +90,16 @@ class StoreController extends Controller
     public function destroy(string $id)
     {
         $store = Store::findOrFail($id);
+
+        // Check if the store has associated products
+        if ($store->products()->count() > 0) {
+            // Return a friendly message instead of an error
+            return redirect('/stores')->with('error', 'Cannot delete store because it has associated products.');
+        }
+
+        // Proceed with deleting the store if there are no associated products
         $store->delete();
 
-        return redirect('/stores')->with('success', $store->name . ' has been deleted');
+        return redirect('/stores')->with('success', value: "{$store->city} has been deleted");
     }
 }

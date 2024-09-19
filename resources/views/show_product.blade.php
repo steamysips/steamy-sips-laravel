@@ -17,6 +17,12 @@
     </div><br />
   @endif
 
+  @if(session()->get('error'))
+    <div class="alert alert-danger">
+      {{ session()->get('error') }}
+    </div><br />
+  @endif
+
   <!-- Product Details -->
   <h3>Products</h3>
   <table class="table">

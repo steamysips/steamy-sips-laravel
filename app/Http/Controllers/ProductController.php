@@ -13,7 +13,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(3);
         return view('index_product', ['products' => $products]);
     }
 
@@ -109,6 +109,11 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
+
+        // Detach associated stores before deleting the product
+        $product->stores()->detach();
+
+        // Now proceed with deleting the product
         $product->delete();
 
         return redirect('/products')->with('success', "{$product->name} has been deleted");

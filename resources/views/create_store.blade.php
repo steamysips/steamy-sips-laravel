@@ -35,7 +35,7 @@
       </div>
       <div class="form-group">
           <label for="district">District</label>
-          <select class="form-control" name="district">
+          <select class="form-control" name="districts">
               @foreach($districts as $district)
               <option value="{{ $district }}">{{ $district }}</option>
               @endforeach
