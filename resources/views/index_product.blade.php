@@ -60,6 +60,7 @@
                     <td>Category</td>
                     <td>Price</td>
                     <td class="text-center">Actions</td>
+                    <td class="text-center">Reviews</td> <!-- Add Reviews Column -->
                 </tr>
             </thead>
             <tbody>
@@ -80,6 +81,12 @@
                                 @method('DELETE')
                                 <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                             </form>
+                        </td>
+                        <td class="text-center"> <!-- Reviews Column -->
+                            <a href="{{ route('reviews.index', $product->product_id) }}"
+                                class="btn btn-primary btn-sm">View</a>
+                            <a href="{{ route('reviews.create', $product->product_id) }}"
+                                class="btn btn-success btn-sm">Create</a>
                         </td>
                     </tr>
                 @endforeach

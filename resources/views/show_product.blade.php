@@ -55,6 +55,29 @@
     </tbody>
   </table>
 
+  <!-- Reviews Section -->
+  <h3>Reviews</h3>
+  <table class="table">
+    <thead>
+        <tr class="table-warning">
+          <td>Review ID</td>
+          <td>Rating</td>
+          <td>Review Text</td>
+          <td>Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($product->reviews as $review)
+        <tr>
+            <td>{{ $review->review_id }}</td>
+            <td>{{ $review->rating }}</td>
+            <td>{{ $review->text }}</td>
+            <td>{{ $review->created_at->format('Y-m-d H:i') }}</td> 
+        </tr>
+        @endforeach
+    </tbody>
+  </table>
+
   <!-- Associated Stores -->
   <h3>Stores</h3>
   <table class="table">

@@ -16,4 +16,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Store::class, 'product_store', 'product_id', 'store_id');
     }
+    
+    // One-to-many relationship with reviews
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'product_id', 'product_id');
+    }
 }
