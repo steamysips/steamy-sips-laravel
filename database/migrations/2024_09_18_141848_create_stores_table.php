@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('phone_no');
             $table->string('street');
             $table->string('city');
-            $table->point('coordinate')->nullable()->default(null);
+            $table->point('coordinate')->nullable();
             $table->enum('districts', ['Moka','Port Louis','Flacq','Curepipe','Black River','Savanne','Grand Port','Riviere du Rempart','Pamplemousses','Mahebourg','Plaines Wilhems']);
             $table->timestamps();
         });

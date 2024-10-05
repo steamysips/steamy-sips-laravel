@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Store;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StoreController extends Controller
 {
@@ -40,8 +41,16 @@ class StoreController extends Controller
             'street' => 'required|max:255',
             'city' => 'required|max:255',
             'districts' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
-            'coordinate' => 'nullable',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
         ]);
+
+        if ($request->filled(['latitude', 'longitude'])) {
+            $storeData['coordinate'] = [
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude
+            ];
+        }
 
         Store::create($storeData);
 
@@ -77,10 +86,31 @@ class StoreController extends Controller
             'street' => 'required|max:255',
             'city' => 'required|max:255',
             'districts' => 'required|in:Moka,Port Louis,Flacq,Curepipe,Black River,Savanne,Grand Port,Riviere du Rempart,Pamplemousses,Mahebourg,Plaines Wilhems',
-            'coordinate' => 'nullable',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
         ]);
 
-        Store::where('store_id', $id)->update($updateData);
+        // Update other fields except coordinates
+        $store = Store::findOrFail($id);
+        $store->phone_no = $updateData['phone_no'];
+        $store->street = $updateData['street'];
+        $store->city = $updateData['city'];
+        $store->districts = $updateData['districts'];
+        $store->save();  // Save these changes first
+
+        // Check if latitude and longitude are provided, and then update the coordinates separately
+        if ($request->filled(['latitude', 'longitude'])) {
+            $latitude = $request->input('latitude');
+            $longitude = $request->input('longitude');
+
+            // Use a raw query to update the POINT field
+            DB::table('stores')
+                ->where('store_id', $id)
+                ->update([
+                    'coordinate' => DB::raw("ST_GeomFromText('POINT($longitude $latitude)')")
+                ]);
+        }
+
         return redirect('/stores')->with('success', 'Store details have been updated');
     }
 

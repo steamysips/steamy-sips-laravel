@@ -12,7 +12,9 @@ class Review extends Model
     protected $primaryKey = 'review_id';
     protected $fillable = ['rating', 'text', 'product_id'];
 
-    // Inverse of the one-to-many relationship with Product
+    /**
+     * inverse of one-to-many relationship: a review belongs to a single product
+     */
     public function product()
     {
         return $this->belongsTo(Product::class, 'product_id', 'product_id');

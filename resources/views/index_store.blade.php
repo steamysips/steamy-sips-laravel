@@ -36,6 +36,7 @@
                     <td>Street</td>
                     <td>City</td>
                     <td>District</td>
+                    <td>Coordinate (Latitude, Longitude)</td>
                     <td class="text-center">Actions</td>
                 </tr>
             </thead>
@@ -47,6 +48,7 @@
                         <td>{{ $store->street }}</td>
                         <td>{{ $store->city }}</td>
                         <td>{{ $store->districts }}</td>
+                        <td>{{ $store->coordinate ? '(' . $store->coordinate['latitude'] . ', ' . $store->coordinate['longitude'] . ')' : 'Not Available' }}</td>
                         <td class="text-center">
                             <a href="{{ route('stores.show', $store->store_id) }}" class="btn btn-primary btn-sm">Show</a>
                             <a href="{{ route('stores.edit', $store->store_id) }}" class="btn btn-primary btn-sm">Edit</a>
@@ -72,7 +74,7 @@
         </div>
 
         {{-- <div class="text-center create-btn">
-    <a href="{{ route('stores.create') }}" class="btn btn-success mt-3">Add Store</a>
+    <a href="{{ route('stores.create') }}" class="mt-3 btn btn-success">Add Store</a>
   </div> --}}
 
     </div>
